@@ -3,6 +3,7 @@ package com.giuliano.workshopmongo.resources;
 import com.giuliano.workshopmongo.domain.Post;
 import com.giuliano.workshopmongo.domain.User;
 import com.giuliano.workshopmongo.dto.UserDTO;
+import com.giuliano.workshopmongo.resources.util.URL;
 import com.giuliano.workshopmongo.services.PostService;
 import com.giuliano.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,11 @@ public class PostResource {
         List<Post> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
+    @GetMapping("/titlesearch")
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> list = service.findBytitle(text);
+        return ResponseEntity.ok().body(list);
+    }
+
 }
